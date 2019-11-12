@@ -4,34 +4,15 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-	"os"
 	"strconv"
 	"strings"
     "io"
 )
 
-func getArgs() int {
 
-	if len(os.Args) != 2 {
-		fmt.Printf("Usage: go run server.go <portnumber>\n")
-		os.Exit(1)
-	} else {
-		fmt.Printf("#DEBUG ARGS Port Number : %s\n", os.Args[1])
-		portNumber, err := strconv.Atoi(os.Args[1])
-		if err != nil {
-			fmt.Printf("Usage: go run server.go <portnumber>\n")
-			os.Exit(1)
-		} else {
-			return portNumber
-		}
-
-	}
-    //PFR should never be reached
-	return -1
-}
 
 func main() {
-	port := getArgs()
+	port := 5000
 	fmt.Printf("#DEBUG MAIN Creating TCP Server on port %d\n", port)
 	portString := fmt.Sprintf(":%s", strconv.Itoa(port))
 	fmt.Printf("#DEBUG MAIN PORT STRING |%s|\n", portString)
