@@ -1,0 +1,7 @@
+À faire :
+
+- Boucle de parse sur le client
+- Boucle de comparaison sur le serveur
+- Gestion du score de plagiat
+- Affichage du résultat
+- Implémentation des goroutines
