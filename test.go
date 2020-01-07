@@ -23,3 +23,10 @@ func textFilesInDirectory() []string {
 
     return textFiles
 }
+
+func main() {
+	textFiles := textFilesInDirectory()
+	for i:=0; i<len(textFiles); i++{
+		fmt.Println(textFiles[i])
+	}
+}

@@ -48,7 +48,7 @@ func splitText(text string) []string{
   	return string_tab
 }
 
-func compare(s1 string, s2 string) {
+func stringInText(s1 string, s2 string) {
 	bool := strings.Contains(s2, s1)
 
 	if bool == true {
@@ -86,7 +86,7 @@ func main(){
 	string_tab := splitText("prez.txt")
 	for s:=0; s<len(string_tab); s++ {
 		waitingGroup.Add(1)
-		go compare(string_tab[s], bd)
+		go stringInText(string_tab[s], bd)
 	}
 
 	fmt.Println("DEBUG WAITING")

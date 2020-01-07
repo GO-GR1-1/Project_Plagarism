@@ -1,7 +1,6 @@
 À faire :
 
-- Boucle de parse sur le client
-- Boucle de comparaison sur le serveur
-- Gestion du score de plagiat
-- Affichage du résultat
-- Implémentation des goroutines
+- Go routines pour comparer avec plusieurs fichiers texte en même temps
+- Tout mettre en mode client/serveur
+- Il y a un biais dans notre algorithme car à un caractère près (espace ou saut de ligne par exemple) la phrase n'est pas reconnue comme étant dans le texte et donc n'est pas comptée pour le score de plagiat
+- Interpréter le score de plagiat
