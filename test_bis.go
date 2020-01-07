@@ -62,6 +62,23 @@ func compare(s1 string, s2 string) {
 	// The distance between kitten and sitting is 3.
 }
 
+func textFilesInDirectory() []string {
+	files, err := ioutil.ReadDir(".")
+    if err != nil {
+        log.Fatal(err)
+    }
+	
+	var textFiles []string
+    
+    for _, file := range files {
+        if strings.Contains(file.Name(), ".txt") {
+        	textFiles = append(textFiles, file.Name())
+        }
+    }
+
+    return textFiles
+}
+
 func main(){
 	fmt.Println("DEBUG START")
 

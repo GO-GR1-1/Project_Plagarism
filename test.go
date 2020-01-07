@@ -7,7 +7,7 @@ import (
     "strings"
 )
 
-func main(){
+func textFilesInDirectory() []string {
 	files, err := ioutil.ReadDir(".")
     if err != nil {
         log.Fatal(err)
@@ -18,7 +18,8 @@ func main(){
     for _, file := range files {
         if strings.Contains(file.Name(), ".txt") {
         	textFiles = append(textFiles, file.Name())
-        	fmt.Println(file.Name())
         }
     }
+
+    return textFiles
 }
