@@ -11,7 +11,7 @@ import (
 )
 
 var waitingGroup sync.WaitGroup
-//var waitingGroup2 sync.WaitGroup
+var waitingGroup2 sync.WaitGroup
 
 func openText(text string) string{
 	//Ouverture du fichier
@@ -49,13 +49,14 @@ func splitText(text string) []string{
   	return string_tab
 }
 
-func stringInText(s1 string, s2 string) {
+func stringInText(s1 string, s2 string, s2_name string) {
 	bool := strings.Contains(s2, s1)
 
 	if bool == true {
-		fmt.Println(s1)
+		fmt.Println("From " + s2_name + " : " + s1)
 	}
 	
+	waitingGroup2.Done()
 	//distance := levenshtein.ComputeDistance(s1, s2)
 	//fmt.Printf("The distance between %s and %s is %d.\n", s1, s2, distance)
 	// Output:
@@ -81,13 +82,12 @@ func textFilesInDirectory() []string {
 
 func compareText(text string, textToCompare []string){
 	bd := openText(text)
-	//string_tab := splitText(text2)
 	for s:=0; s<len(textToCompare); s++ {
-		waitingGroup.Add(1)
-		go stringInText(textToCompare[s], bd)
+		waitingGroup2.Add(1)
+		go stringInText(textToCompare[s], bd, text)
 	}
 
-	waitingGroup.Wait()
+	waitingGroup2.Wait()
 
 	waitingGroup.Done()
 }
@@ -104,6 +104,5 @@ func main() {
 	fmt.Println("DEBUG WAITING")
 	waitingGroup.Wait()
 
-	waitingGroup.Done()
 	fmt.Println("DEBUG END")
 }
