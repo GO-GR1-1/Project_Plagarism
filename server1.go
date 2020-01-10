@@ -3,21 +3,23 @@ package main
 import "net"
 import "fmt"
 import "bufio"
-import "os"
+//import "strings" // only needed below for sample processing
 
 func main() {
 
   // connect to this socket
   conn, _ := net.Dial("tcp", "127.0.0.1:5008")
   for { 
-    // read in input from stdin
-    reader := bufio.NewReader(os.Stdin)
-    fmt.Print("Text to send: ")
-    text, _ := reader.ReadString('\n')
-    // send to socket
-    fmt.Fprintf(conn, text + "\n")
-    // listen for reply
+    // will listen for message to process ending in newline (\n)
     message, _ := bufio.NewReader(conn).ReadString('\n')
-    fmt.Print("Message from server: "+message)
+    // output message received
+    fmt.Print("Text To analyse:", string(message))
+    
+    // // sample process for string received
+    // newmessage := strings.ToUpper(message)
+    // // send new string back to client
+    // conn.Write([]byte(newmessage + "\n"))
+
+    
   }
 }

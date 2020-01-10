@@ -1,0 +1,2 @@
+Ce texte est le texte à envoyer, il devrait s'écrir sur le terminal.
+

@@ -3,11 +3,13 @@ package main
 import "net"
 import "fmt"
 import "bufio"
-import "strings" // only needed below for sample processing
+import "os"
+import "io/ioutil"
+import "strings"
 
 func main() {
 
-  fmt.Println("Launching server...")
+  fmt.Println("Waiting for server...")
 
   // listen on all interfaces
   ln, _ := net.Listen("tcp", ":5008")
@@ -17,13 +19,29 @@ func main() {
 
   // run loop forever (or until ctrl-c)
   for {
-    // will listen for message to process ending in newline (\n)
-    message, _ := bufio.NewReader(conn).ReadString('\n')
-    // output message received
-    fmt.Print("Message Received:", string(message))
-    // sample process for string received
-    newmessage := strings.ToUpper(message)
-    // send new string back to client
-    conn.Write([]byte(newmessage + "\n"))
+    //read file name in input from stdin
+    reader := bufio.NewReader(os.Stdin)
+    fmt.Print("Name of the file to analyse: ")
+    text, err := reader.ReadString('\n')
+
+    //Delete the \n character
+    text = strings.TrimSuffix(text, "\n")
+    
+    if err != nil {
+      fmt.Println("can't find file")
+    }
+
+    //read content of file
+    contBytes, _ := ioutil.ReadFile(text)
+
+    //convert content from bytes to string
+    contText := string(contBytes)
+
+    // send to socket
+    fmt.Fprintf(conn, contText)
+    
+    // listen for reply
+    // message, _ := bufio.NewReader(conn).ReadString('\n')
+    // fmt.Print("Message from server: "+message)
   }
 }
