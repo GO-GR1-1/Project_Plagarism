@@ -49,20 +49,6 @@ func splitText(text string) []string{
   	return string_tab
 }
 
-func stringInText(s1 string, s2 string, s2_name string) {
-	bool := strings.Contains(s2, s1)
-
-	if bool == true {
-		fmt.Println("From " + s2_name + " : " + s1)
-	}
-	
-	waitingGroup2.Done()
-	//distance := levenshtein.ComputeDistance(s1, s2)
-	//fmt.Printf("The distance between %s and %s is %d.\n", s1, s2, distance)
-	// Output:
-	// The distance between kitten and sitting is 3.
-}
-
 func textFilesInDirectory() []string {
 	files, err := ioutil.ReadDir(".")
     if err != nil {
@@ -78,6 +64,20 @@ func textFilesInDirectory() []string {
     }
 
     return textFiles
+}
+
+func stringInText(s1 string, s2 string, s2_name string) {
+	bool := strings.Contains(s2, s1)
+
+	if bool == true {
+		fmt.Println("From " + s2_name + " : " + s1)
+	}
+	
+	waitingGroup2.Done()
+	//distance := levenshtein.ComputeDistance(s1, s2)
+	//fmt.Printf("The distance between %s and %s is %d.\n", s1, s2, distance)
+	// Output:
+	// The distance between kitten and sitting is 3.
 }
 
 func compareText(text string, textToCompare []string){
