@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/agnivade/levenshtein"
+	//"github.com/agnivade/levenshtein"
 )
 
 func main() {
