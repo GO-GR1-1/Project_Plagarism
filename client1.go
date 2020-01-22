@@ -1,47 +1,47 @@
 package main
 
-import "net"
-import "fmt"
-import "bufio"
-import "os"
-import "io/ioutil"
-import "strings"
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"net"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
 
 func main() {
+	port := 5050
+	fmt.Printf("#DEBUG DIALING TCP Server on port %d\n", port)
+	portString := fmt.Sprintf("127.0.0.1:%s", strconv.Itoa(port))
+	fmt.Printf("#DEBUG MAIN PORT STRING |%s|\n", portString)
 
-  fmt.Println("Waiting for server...")
+	conn, err := net.Dial("tcp", portString)
+	defer conn.Close()
+	if err != nil {
 
-  // listen on all interfaces
-  ln, _ := net.Listen("tcp", ":5008")
+		fmt.Printf("#DEBUG MAIN could not connect\n")
+		os.Exit(1)
+	} else {
 
-  // accept connection on port
-  conn, _ := ln.Accept()
+		reader := bufio.NewReader(conn)
+		fmt.Printf("#DEBUG MAIN connected\n")
 
-  // run loop forever (or until ctrl-c)
-  for {
-    //read file name in input from stdin
-    reader := bufio.NewReader(os.Stdin)
-    fmt.Print("Name of the file to analyse: ")
-    text, err := reader.ReadString('\n')
+		readConsole := bufio.NewReader(os.Stdin)
+		textToSend, _ := readConsole.ReadString('\n')
 
-    //Delete the \n character
-    text = strings.TrimSuffix(text, "\n")
-    
-    if err != nil {
-      fmt.Println("can't find file")
-    }
+		io.WriteString(conn, fmt.Sprintf("%s\n", textToSend))
+		resultString, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Printf("DEBUG MAIN could not read from server")
+			os.Exit(1)
+		}
+		resultString = strings.TrimSuffix(resultString, "\n")
+		fmt.Printf("#DEBUG server replied : |%s|\n", resultString)
+		time.Sleep(100 * time.Millisecond)
 
-    //read content of file
-    contBytes, _ := ioutil.ReadFile(text)
+		//}
 
-    //convert content from bytes to string
-    contText := string(contBytes)
-
-    // send to socket
-    fmt.Fprintf(conn, contText)
-    
-    // listen for reply
-    // message, _ := bufio.NewReader(conn).ReadString('\n')
-    // fmt.Print("Message from server: "+message)
-  }
+	}
 }
